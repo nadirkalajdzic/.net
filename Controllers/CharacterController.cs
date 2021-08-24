@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DTOs.Character;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Services.CharacterService;
 
-namespace _net.Controllers
+namespace Controllers
 {
     [ApiController]
     [Route("characters")]
@@ -25,21 +26,21 @@ namespace _net.Controllers
         }
 
         [HttpGet("all")]
-        public async Task<ActionResult<ServiceResponse<List<Character>>>> GetAllCharacters()
+        public async Task<ActionResult<ServiceResponse<List<GetCharacterDTO>>>> GetAllCharacters()
         {
             return Ok(await _characterService.GetAllCharacters());
         }
 
         [HttpGet("character/{Id}")]
-        public async Task<ActionResult<ServiceResponse<Character>>> GetCharacterById(int Id)
+        public async Task<ActionResult<ServiceResponse<GetCharacterDTO>>> GetCharacterById(int Id)
         {
             return Ok(await _characterService.GetCharacterById(Id));
         }
 
         [HttpPost("character")]
-        public async Task<ActionResult<ServiceResponse<List<Character>>>> AddCharacter(Character c)
+        public async Task<ActionResult<ServiceResponse<List<GetCharacterDTO>>>> AddCharacter(AddCharacterDTO addCharacterDTO)
         {
-            return Ok(await _characterService.AddCharacter(c));
+            return Ok(await _characterService.AddCharacter(addCharacterDTO));
         }
     }
 }

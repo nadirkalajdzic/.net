@@ -33,7 +33,7 @@ namespace _net
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "_net", Version = "v1" });
             });
-
+            services.AddAutoMapper(typeof(Startup));
             services.AddScoped<ICharacterService, CharacterService>();
         }
 
