@@ -38,10 +38,10 @@ namespace Services.CharacterService
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<List<GetCharacterDTO>>> GetAllCharacters()
+        public async Task<ServiceResponse<List<GetCharacterDTO>>> GetAllCharacters(int userId)
         {
             var serviceResponse = new ServiceResponse<List<GetCharacterDTO>>();
-            var dbCharacters = await _context.Characters.ToListAsync();
+            var dbCharacters = await _context.Characters.Where(x => x.User.Id == userId).ToListAsync();
             serviceResponse.Data = dbCharacters.Select(x => _mapper.Map<GetCharacterDTO>(x)).ToList(); ;
             return serviceResponse;
         }
