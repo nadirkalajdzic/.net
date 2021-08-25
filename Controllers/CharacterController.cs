@@ -2,12 +2,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DTOs.Character;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Services.CharacterService;
 
 namespace Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/characters")]
     public class CharacterController : ControllerBase
