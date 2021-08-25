@@ -31,8 +31,7 @@ namespace Controllers
         [HttpGet("all")]
         public async Task<ActionResult<ServiceResponse<List<GetCharacterDTO>>>> GetAllCharacters()
         {
-            int id = int.Parse(User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value);
-            return Ok(await _characterService.GetAllCharacters(id));
+            return Ok(await _characterService.GetAllCharacters());
         }
 
         [HttpGet("character/{Id}")]

@@ -31,17 +31,22 @@ namespace Services.CharacterService
             var serviceResponse = new ServiceResponse<List<GetCharacterDTO>>();
             var character = _mapper.Map<Character>(addCharacterDTO);
 
+            character.User = await _context.Users.FirstOrDefaultAsync(x => x.Id == GetUserId());
             _context.Add(character);
             await _context.SaveChangesAsync();
 
-            serviceResponse.Data = await _context.Characters.Select(x => _mapper.Map<GetCharacterDTO>(x)).ToListAsync();
+            serviceResponse.Data = await _context.Characters
+                                        .Where(x => x.User.Id == character.User.Id)
+                                        .Select(x => _mapper.Map<GetCharacterDTO>(x))
+                                        .ToListAsync();
+
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<List<GetCharacterDTO>>> GetAllCharacters(int userId)
+        public async Task<ServiceResponse<List<GetCharacterDTO>>> GetAllCharacters()
         {
             var serviceResponse = new ServiceResponse<List<GetCharacterDTO>>();
-            var dbCharacters = await _context.Characters.Where(x => x.User.Id == userId).ToListAsync();
+            var dbCharacters = await _context.Characters.Where(x => x.User.Id == GetUserId()).ToListAsync();
             serviceResponse.Data = dbCharacters.Select(x => _mapper.Map<GetCharacterDTO>(x)).ToList(); ;
             return serviceResponse;
         }
