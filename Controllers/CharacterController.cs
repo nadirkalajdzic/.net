@@ -9,7 +9,7 @@ using Services.CharacterService;
 namespace Controllers
 {
     [ApiController]
-    [Route("characters")]
+    [Route("api/characters")]
     public class CharacterController : ControllerBase
     {
         private static List<Character> characters = new List<Character>()
